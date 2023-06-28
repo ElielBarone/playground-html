@@ -1,106 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-   
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Playground</title>
 
-    <style>
-      button{
-        height: 36px;
-        padding: 20px;
-        display: inline-flex;
-        align-items: center; 
-      }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Playground</title>
 
-      .danger-btn{      
-        background-color: chocolate; 
-        border-color: chocolate; 
-        color:aliceblue
-      }
+  <style>
+    li {
+      padding: 10px;
+    }
+  </style>
+</head>
 
-      .rounded-btn{
-        border-radius: 20px;      
+<body>
 
-      }
-    </style>
-  </head>
-  <body>
-   
-  
-    <script>      
+  <h1>Welcome to Playground</h1>
+  <ul>
+    <li><a href="/iframe">iFrame</a></li>
+    <li><a href="/websocket">WebSocket</a></li>
+  </ul>
 
-      window.addEventListener("flutterInAppWebViewPlatformReady", flutterInAppWebViewPlatformReadyHandler);
+</body>
 
-      function getLogContainer() {
-        return document.getElementById('log-container');
-      }
-
-      function addLog(text){        
-        getLogContainer().innerHTML += '<br/>' + text;
-      }
-
-      function clearLog(){
-        getLogContainer().innerHTML = ''
-      }
-
-      function flutterInAppWebViewPlatformReadyHandler(event){
-        addLog('flutterInAppWebViewPlatformReady fired');
-      }
-
-      // testing the dispatch
-      function dispatchFlutterInAppWebViewPlatformReadyEvent(){
-        window.dispatchEvent(new Event('flutterInAppWebViewPlatformReady',  {"bubbles":true, "cancelable":false}))
-      }
-
-      // with flutter in app
-      function withFlutterInAppWebView(){
-        if(!window.flutter_inappwebview){
-          addLog('flutter_inappwebview not found', window.flutter_inappwebview)
-        }
-
-        if(window.flutter_inappwebview && !window.flutter_inappwebview.callHandler){
-          addLog('flutter_inappwebview.callHandler not found', window.flutter_inappwebview)
-        }
-        
-        addLog('BEFORE flutter_inappwebview.callHandler');
-        try{
-        window.flutter_inappwebview.callHandler('clipboardHandler', 'pix-text-message-call-handler').then(function(result) {
-              addLog('call-handler-finished');
-          });
-        }catch(e){
-          
-          addLog(e)
-          
-        }
-
-        addLog('AFTER flutter_inappwebview.callHandler');
-      }
-
-      // with postMessage
-      function withBasicPostMessage(){
-        window.parent.postMessage('pix-text-message-on-post-message', "*");
-        addLog('postMessageSent')
-      }
-      
-    </script>
-    
-    <h1>Playground</h1>
-    <button onclick="withFlutterInAppWebView()">Call Handler</button>
-    <button onclick="withBasicPostMessage()">Post Message</button>    
-    <br/>
-    <br/>
-    <br/>
-    
-    
-    <button onclick="dispatchFlutterInAppWebViewPlatformReadyEvent()"
-            class="danger-btn rounded-btn">Test Event</button>
-    
-            <button class="rounded-btn" onclick="clearLog()">Clear</button>
-    <div id="log-container" style="margin-top: 40px; width: 100%"></div>
-    
-    
-    
-  </body>
 </html>
