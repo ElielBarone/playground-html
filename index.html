@@ -14,11 +14,14 @@
         align-items: center; 
       }
 
-      .danger-btn{
-        border-radius: 20px; 
+      .danger-btn{      
         background-color: chocolate; 
         border-color: chocolate; 
         color:aliceblue
+      }
+
+      .rounded-btn{
+        border-radius: 20px;      
 
       }
     </style>
@@ -30,9 +33,16 @@
 
       window.addEventListener("flutterInAppWebViewPlatformReady", flutterInAppWebViewPlatformReadyHandler);
 
-      function addLog(text){
-        var logContainer = document.getElementById('log-container');
-        logContainer.innerHTML += '<br/>' + text;
+      function getLogContainer() {
+        return document.getElementById('log-container');
+      }
+
+      function addLog(text){        
+        getLogContainer().innerHTML += '<br/>' + text;
+      }
+
+      function clearLog(){
+        getLogContainer().innerHTML = ''
       }
 
       function flutterInAppWebViewPlatformReadyHandler(event){
@@ -82,12 +92,15 @@
     <br/>
     <br/>
     <br/>
-    <button onclick="dispatchFlutterInAppWebViewPlatformReadyEvent()"
-            class="danger-btn">Test Event</button>
     
+    
+    <button onclick="dispatchFlutterInAppWebViewPlatformReadyEvent()"
+            class="danger-btn rounded-btn">Test Event</button>
+    
+            <button class="rounded-btn" onclick="clearLog()">Clear</button>
     <div id="log-container" style="margin-top: 40px; width: 100%"></div>
     
-
+    
     
   </body>
 </html>
