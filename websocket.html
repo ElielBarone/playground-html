@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+   
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Playground</title>
+
+    <style>
+      button{
+        height: 36px;
+        padding: 20px;
+        display: inline-flex;
+        align-items: center; 
+      }
+
+      .danger-btn{      
+        background-color: chocolate; 
+        border-color: chocolate; 
+        color:aliceblue
+      }
+
+      .rounded-btn{
+        border-radius: 20px;      
+
+      }
+    </style>
+  </head>
+  <body>
+   
+  
+    <script>      
+
+    var wsUri = "wss://socketsbay.com/wss/v2/1/demo/eliel-playground";
+    
+    function connectWebsocket()
+    {
+      websocket = new WebSocket(wsUri);
+      websocket.onopen    = function(evt) { onOpen(evt)    };
+      websocket.onclose   = function(evt) { onClose(evt)   };
+      websocket.onmessage = function(evt) { onMessage(evt) };
+      websocket.onerror   = function(evt) { onError(evt)   };
+    }
+
+    function onOpen(evt)
+    {
+      addLog("CONNECTED");
+      sendMessage("Hello world");
+    }
+
+    function onClose(evt)
+    {
+      addLog("Websocket DISCONNECTED");
+    }
+
+    function onMessage(evt)
+    {
+      addLog('<span style="color: blue;">RESPONSE: ' + evt.data+'</span>');
+      websocket.close();
+    }
+
+    function onError(evt)
+    {
+      addLog('<span style="color: red;">ERROR:</span> ' + evt.data);
+    }
+
+    function sendMessage(message)
+    {
+      addLog("SENT: " + message);
+      websocket.send(message);
+    }
+
+    function getLogContainer() {
+        return document.getElementById('log-container');
+      }
+
+
+       
+    function addLog(text){        
+        getLogContainer().innerHTML += '<br/>' + text;
+      }
+
+      function clearLog(){
+        getLogContainer().innerHTML = ''
+      }
+      
+    </script>
+    
+    <h1>Playground WS</h1>
+    <ol>
+      <li>Go to <a href="https://socketsbay.com/test-websockets" target="_blank"> </a>socketsbay</li>
+      <li>Add this address to server url <i>wss://socketsbay.com/wss/v2/1/demo/eliel-playground</i></li>
+      <li>then click on connect</b></li>
+    </ol>
+    <button onclick="connectWebsocket()">Connect</button>       
+    <br/>
+    <br/>
+    <br/>
+    
+    
+    <button onclick="sendMessage('playground-message')"
+            class="danger-btn rounded-btn">Send Message</button>
+    
+            <button class="rounded-btn" onclick="clearLog()">Clear</button>
+    <div id="log-container" style="margin-top: 40px; width: 100%"></div>
+    
+    
+    
+  </body>
+</html>
